@@ -1,0 +1,6 @@
+
+.vscode
+
+zoterotools.egg-info/
+
+zoterotools/__pycache__/

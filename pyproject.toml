@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ZoteroTools"
+version = "0.1.0"
+description = "Imports"
+authors = ["Keno Maerz <k.maerz@dkfz-heidelberg.de>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.23.0"
+pyzotero = "^1.4.15"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
