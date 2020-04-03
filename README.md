@@ -1,4 +1,4 @@
-Scripts to import, edit and modify data from and to zotero. See example.py for examples.
+Scripts to import, edit, modify, and analyse data from and to zotero. See example.py for examples.
 
 Uses poetry for dependency management.
 
