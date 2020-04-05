@@ -63,16 +63,16 @@ def check_for_duplicate(article1, article2, title_thresh, author_thresh, abstrac
         else:
             return [0, ""]
 
-def find_duplicates(zotero_group_id, zotero_api_key, zotero_collection_id="", output_file_name="", title_thresh=0.75, author_thresh=0.75, abstract_thresh=0.5):
+def find_duplicates(zotero_group_id, zotero_api_key, zotero_collection_id=[], output_file_name="", title_thresh=0.75, author_thresh=0.75, abstract_thresh=0.5):
     """
-    Function to be used to find potential duplicates in a zotero library / collection.
+    Function to be used to find potential duplicates in a zotero library / zotero collections.
     Two papers are considered a duplicate if at least two of the following statements are true
     - The author lists have at least an overlap of author_thresh (default: 75%)
     - The titles have at least an overlap of title_thresh (default: 75%)
     - The abstracts have at least an overlap of abstract_thresh (default: 75%)
     :param zotero_group_id: ID of zotero group in which duplicate search will be performed (see https://forums.zotero.org/discussion/71055/where-do-i-find-the-groupid)
     :param zotero_api_key: Personal key to communicate with API. Can be generated here: https://www.zotero.org/settings/keys
-    :param zotero_collection_id: ID of zotero collection in which duplicate search will be performed (see https://forums.zotero.org/discussion/18400/collectionid-collectionkey)
+    :param zotero_collection_id: IDs of the zotero collections for the elements of which duplicate search will be performed (see https://forums.zotero.org/discussion/18400/collectionid-collectionkey)
     :param output_file_name: File location where output should be written
     :param title_thresh: Threshold defining the minimum necessary overlap of the titles to be considered as duplicate (default: 0.75)
     :param author_thresh: Threshold defining the minimum necessary overlap of the author lists to be considered as duplicate (default: 0.75)
@@ -80,9 +80,11 @@ def find_duplicates(zotero_group_id, zotero_api_key, zotero_collection_id="", ou
     :return: String of found potential duplicates
     """
     zot = zotero.Zotero(zotero_group_id, "group", zotero_api_key)
-    if zotero_collection_id:
-        # if zotero collection id is specified load articles from collection
-        articles = zot.everything(zot.collection_items(zotero_collection_id))
+    articles = []
+    if len(zotero_collection_id)>0:
+        # if at least one zotero collection id is specified load articles from collection(s)
+        for i in range(len(zotero_collection_id)):
+            articles += zot.everything(zot.collection_items(zotero_collection_id[i]))
     else:
         # else load all articles from zotero group
         articles = zot.everything(zot.items())
